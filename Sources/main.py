@@ -144,7 +144,7 @@ def checkWinner():
         winner = 2
 
     return winner
-    
+
 pygame.init()
 
 # game color
@@ -170,9 +170,6 @@ clock = pygame.time.Clock()
 # set game
 drawInit()
 
-# drawX(50, 50)
-# drawCircle(150, 50)
-
 # loop game
 while not done:
     clock.tick(10)  # set fps, 1 sec to 10 frame
@@ -183,9 +180,6 @@ while not done:
         if event.type == pygame.MOUSEBUTTONDOWN: # if input mouse button down
             mouseDown = True
   
-    
-    pygame.display.flip()   # update game display 
-
     if mouseDown:
         mousePos = pygame.mouse.get_pos()
         checkMousePos(mousePos)
@@ -198,9 +192,8 @@ while not done:
             elif winner == 2:
                 print("winner is o")
                 done = True
-        
-    
 
+    pygame.display.flip()   # update game display 
 
     # update value
     mouseDown = False
