@@ -1,4 +1,5 @@
 import pygame
+import minimax
 
 # draw game init
 def drawInit():
@@ -94,7 +95,7 @@ def normalizeMousePos(mousePos : tuple)-> bool:
     else:
         return False
 # check who is winner
-def checkWinner():
+def checkWinner()->int:
     winner = 0
     # check vertical
     for i in range(3):
@@ -225,13 +226,24 @@ while not done:
                 restartGame()                       # restart game
   
     if mouseDown and not end:                       # if mouse down and game wasn't end
-        mousePos = pygame.mouse.get_pos()           # get mouse position    
-        if(normalizeMousePos(mousePos)):            # normalization mouse position
-            isPlayerOne = not isPlayerOne           # turn player
-            winner = checkWinner()                  # check winner
-            if winner != 0:                         # if there is a winner
-                drawResult(winner)                  # draw result
-                end = True                          # game end
+        if not isPlayerOne:
+            ans = minimax.randomMark(2, map, [])
+            aiPos = (50 + ans[1][0][0] * 100, 50 + ans[1][0][1] * 100)
+            print(aiPos)
+            if(normalizeMousePos(aiPos)):        # normalization mouse position
+                isPlayerOne = not isPlayerOne       # turn player
+                winner = checkWinner()              # check winner
+                if winner != 0:                     # if there is a winner
+                    drawResult(winner)              # draw result
+                    end = True                      # game end
+        else:
+            mousePos = pygame.mouse.get_pos()       # get mouse position
+            if(normalizeMousePos(mousePos)):        # normalization mouse position
+                isPlayerOne = not isPlayerOne       # turn player
+                winner = checkWinner()              # check winner
+                if winner != 0:                     # if there is a winner
+                    drawResult(winner)              # draw result
+                    end = True                      # game end
 
     pygame.display.flip()                           # update game display 
 
